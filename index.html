@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fix over scroll bg</title>
+
+<style>
+
+/* css reset */
+* { margin: auto; padding: 0; }
+
+:root{
+	--hue-lght: #ffeecc;
+	--hue-dark: #ffccaa;
+}
+
+html{ background: var(--hue-lght); }
+body{ background: linear-gradient(var(--hue-lght), var(--hue-dark)); }
+
+body{
+	height: 200vh; /* force the page's height to be 2x */
+}
+
+</style>
+
+</head>
+<body>
+
+<script>
+"use strict";
+
+let html = document.querySelector("html");
+let body = document.querySelector("body");
+
+let scrolled = function() {
+	let dec = scrollY / (body.scrollHeight-innerHeight); // decimal e.g. 0.5
+	return Math.floor(dec*100);                          // percent e.g. 50%
+}
+
+addEventListener("scroll", function() {
+	html.style.setProperty("background", scrolled() < 50 ?
+		"var(--hue-lght)" : // scrolled <  50% ?
+		"var(--hue-dark)"   // scrolled >= 50% ?
+	);
+});
+
+</script>    
+
+</body>
+</html>
